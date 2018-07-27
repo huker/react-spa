@@ -2,6 +2,7 @@
  * Created by huk on 2018/7/25.
  */
 import React, { Component } from "react";
+import img1 from "../../assets/img/img1.jpeg";
 
 export default class About extends Component {
     render() {
@@ -14,6 +15,7 @@ export default class About extends Component {
                     <li>less antd</li>
                     <li>redux</li>
                 </ul>
+                <img src={img1} alt="img1"/>
             </div>
         )
     }

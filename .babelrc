@@ -2,5 +2,14 @@
   "presets": [
     "env",
     "react"
+  ],
+  "plugins": [
+    [
+      "import",
+      {
+        "style": true,
+        "libraryName": "antd"
+      }
+    ]
   ]
 }

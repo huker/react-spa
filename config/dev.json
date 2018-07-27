@@ -1,0 +1,5 @@
+{
+  "NODE_ENV": "development",
+  "API": "\"http://10.16.15.132\"",
+  "ENV": "dev"
+}

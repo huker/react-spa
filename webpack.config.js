@@ -1,3 +1,4 @@
+"use strict";
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
@@ -5,6 +6,20 @@ const webpack = require('webpack');
 const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin');
 const PurifycssWebpack = require('purifycss-webpack');
 const glob = require('glob');
+
+let env = process.env.ENV || 'dev';
+let envVars;
+try {
+    envVars = require(path.join(__dirname, 'config', env + '.json'));
+} catch (e) {
+    envVars = {
+        "NODE_ENV": "development",
+        "API": "\"http://10.16.15.132\"",
+        "ENV": "dev"
+    };
+}
+
+console.log(envVars)
 
 /**
  * 模式
@@ -28,7 +43,7 @@ const glob = require('glob');
  */
 
 module.exports = {
-    mode: 'development',
+    mode: envVars['NODE_ENV'],
     entry: path.join(__dirname, 'src/index.js'),
     output: {
         path: path.join(__dirname, './dist'),
@@ -61,7 +76,16 @@ module.exports = {
                     use: [
                         { loader: "css-loader" },
                         { loader: "postcss-loader" },
-                        { loader: "less-loader" },
+                        {
+                            loader: "less-loader",
+                            options: {
+                                sourceMap: true,
+                                javascriptEnabled: true,
+                                modifyVars: {
+                                    'primary-color': '#00a6f4'
+                                }
+                            }
+                        },
                     ]
                 })
             },
@@ -69,6 +93,16 @@ module.exports = {
                 test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
                 use: ["babel-loader"]
+            },
+            {
+                test: /\.(png|jpg|gif|svg|jpeg)$/,
+                use: [{
+                    loader: 'url-loader',
+                    options: {
+                        limit: 8192,
+                        name: 'images/[hash:8].[name].[ext]'
+                    }
+                }]
             }
         ]
     },
@@ -83,8 +117,13 @@ module.exports = {
             title: 'react spa',
             hash: true
         }),
-        new PurifycssWebpack({
-            paths: glob.sync(path.resolve('src/*.html'))
+        // new PurifycssWebpack({
+        //     paths: glob.sync(path.resolve('src/*.html'))
+        // })，
+        new webpack.DefinePlugin({
+            ENV: Object.assign(envVars, {
+                environment: JSON.stringify(env)
+            })
         })
     ],
     resolve: {}
