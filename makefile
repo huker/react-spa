@@ -1,3 +1,5 @@
+export PATH := $(realpath .)/node_modules/.bin:$(PATH)
+
 install:
 	@npm install -d;
 
