@@ -4,7 +4,7 @@
 
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
-import { Home, About } from "../pages/index";
+import { Home, About, CodeApi } from "../pages/index";
 import { Layout, Menu, Breadcrumb } from 'antd';
 const { Header, Content, Footer } = Layout;
 
@@ -23,6 +23,9 @@ const getRouter = () => (
                         <Link to="/">首页</Link>
                     </Menu.Item>
                     <Menu.Item key="2">
+                        <Link to="/codeApi">CNode API调用</Link>
+                    </Menu.Item>
+                    <Menu.Item key="3">
                         <Link to="/about">关于</Link>
                     </Menu.Item>
                 </Menu>
@@ -31,6 +34,7 @@ const getRouter = () => (
                 <div style={{ background: '#fff', padding: 24, minHeight: 550 }}>
                     <Switch>
                         <Route exact path="/" component={Home}/>
+                        <Route exact path="/codeApi" component={CodeApi}/>
                         <Route exact path="/about" component={About}/>
                     </Switch>
                 </div>

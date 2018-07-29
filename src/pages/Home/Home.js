@@ -3,6 +3,15 @@ import img1 from "../../assets/img/img1.jpeg";
 import { Tag } from "antd";
 
 export default class Home extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {};
+    }
+
+    componentWillMount() {
+    }
+
     render() {
         return (
             <div style={{ textAlign: 'center' }}>

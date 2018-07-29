@@ -14,7 +14,7 @@ try {
 } catch (e) {
     envVars = {
         "NODE_ENV": "development",
-        "API": "\"http://10.16.15.132\"",
+        "API": "\"https://cnodejs.org/api/v1\"",
         "ENV": "dev"
     };
 }
