@@ -25,10 +25,12 @@ class Home extends Component {
                     <h3 style={{ marginTop: '20px' }}>react项目基础搭建</h3>
                     <p>技术栈用的现在最新的版本 要检查下自己的版本</p>
                     <div>
-                        <Tag color="volcano">react16</Tag>
+                        <Tag color="volcano">React16</Tag>
                         <Tag color="purple">Webpack4</Tag>
-                        <Tag color="gold">less</Tag>
-                        <Tag color="blue">ant design</Tag>
+                        <Tag color="gold">Less</Tag>
+                        <Tag color="blue">Ant design</Tag>
+                        <Tag color="cyan">Redux</Tag>
+                        <Tag color="red">Axios</Tag>
                     </div>
                     <p></p>
                     <p>redux:</p>

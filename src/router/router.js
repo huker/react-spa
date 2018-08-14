@@ -55,7 +55,7 @@ import { Route, Switch } from 'react-router';
 import { createHashHistory } from 'history';
 import { connect, Provider } from 'react-redux';
 import { ConnectedRouter, push } from 'react-router-redux';
-import { Home, CodeApi } from "../pages/index";
+import { Home, About } from "../pages/index";
 
 export default class App extends Component {
 
@@ -75,7 +75,7 @@ export default class App extends Component {
 
                                 <Switch>
                                     <Route exact path="/" component={Home}/>
-                                    <Route exact path="/code" component={CodeApi}/>
+                                    <Route exact path="/about" component={About}/>
                                 </Switch>
 
                             </div>
