@@ -7,20 +7,6 @@ const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin');
 const PurifycssWebpack = require('purifycss-webpack');
 const glob = require('glob');
 
-let env = process.env.ENV || 'dev';
-let envVars;
-try {
-    envVars = require(path.join(__dirname, 'config', env + '.json'));
-} catch (e) {
-    envVars = {
-        "NODE_ENV": "development",
-        "API": "\"https://cnodejs.org/api/v1\"",
-        "ENV": "dev"
-    };
-}
-
-console.log(envVars)
-
 /**
  * 模式
  * 入口
@@ -43,7 +29,7 @@ console.log(envVars)
  */
 
 module.exports = {
-    mode: envVars['NODE_ENV'],
+    mode: "development",
     entry: path.join(__dirname, 'src/index.js'),
     output: {
         path: path.join(__dirname, './dist'),
@@ -110,6 +96,7 @@ module.exports = {
         new ExtractTextWebpackPlugin({
             filename: 'css/index.css'
         }),
+        new webpack.EnvironmentPlugin(Object.keys(process.env)),
         new webpack.HotModuleReplacementPlugin(),
         new CleanWebpackPlugin(['./dist']),
         new HtmlWebpackPlugin({
@@ -120,11 +107,7 @@ module.exports = {
         // new PurifycssWebpack({
         //     paths: glob.sync(path.resolve('src/*.html'))
         // })，
-        new webpack.DefinePlugin({
-            ENV: Object.assign(envVars, {
-                environment: JSON.stringify(env)
-            })
-        })
     ],
-    resolve: {}
+    resolve: {},
+    devtool: 'inline-source-map'
 };

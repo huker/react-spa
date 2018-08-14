@@ -1,5 +1,5 @@
 {
   "NODE_ENV": "production",
-  "API": "\"https://cnodejs.org/api/v1\"",
+  "API": "https://cnodejs.org/api/v1",
   "ENV": "ci"
 }

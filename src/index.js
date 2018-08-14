@@ -1,12 +1,8 @@
 import React from 'react';
-import ReactDom from 'react-dom';
-import getRouter from './router/router';
+import { render } from "react-dom";
+import App from './router/router';
 import './styles/main.less';
+import store from './redux/store';
 
-ReactDom.render(
-    getRouter(), document.querySelector('#app'));
-
-
-if (module.hot) {
-    module.hot.accept();
-}
+const _store = store();
+render(<App store={_store}/>, document.querySelector("#app"));
