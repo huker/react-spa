@@ -1,11 +1,18 @@
 import React, { Component } from 'react';
 import img1 from "../../assets/img/img1.jpeg";
 import { Tag, Button } from "antd";
-import { connect } from "react-redux";
 import { increment, decrement, reset, loadNewsList } from '../../redux/actions/newsAction';
 import BaseLayout from "../../components/Base/Base";
+import { connect } from "react-redux";
 
-class Home extends Component {
+@connect(
+    (state) => ({
+        news: state.news
+    }),
+    { reset, decrement, increment, loadNewsList }
+)
+
+export default class Home extends Component {
 
     constructor(props) {
         super(props);
@@ -42,7 +49,7 @@ class Home extends Component {
                         this.props.decrement()
                     }}>减少1</Button>
                     <Button onClick={() => {
-                        this.props.loadNews()
+                        this.props.loadNewsList()
                     }}>api加载新闻</Button>
 
                     <div>
@@ -56,25 +63,3 @@ class Home extends Component {
         )
     }
 }
-
-const mapStateToProps = (state) => {
-    return {
-        news: state.news
-    }
-}
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        increment: () => {
-            dispatch(increment())
-        },
-        decrement: () => {
-            dispatch(decrement())
-        },
-        loadNews: () => {
-            dispatch(loadNewsList())
-        }
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Home)

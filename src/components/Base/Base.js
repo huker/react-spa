@@ -5,6 +5,16 @@ import React, { Component } from "react";
 import { Layout, Menu, Icon } from 'antd';
 import "./Base.less";
 const { Header, Sider, Content } = Layout;
+import { connect } from "react-redux";
+import { changeTab } from "../../redux/actions/tabAction";
+import { push } from 'react-router-redux';
+
+@connect(
+    (state) => ({
+        active: state.tab.active
+    }),
+    { changeTab, push }
+)
 
 export default class BaseLayout extends Component {
 
@@ -20,9 +30,16 @@ export default class BaseLayout extends Component {
         this.setState({
             collapsed: !this.state.collapsed,
         });
-    }
+    };
+
+    handleClick = (item) => {
+        const { key } = item;
+        this.props.push(key);
+        this.props.changeTab(key)
+    };
 
     render() {
+        const { active } = this.props;
         return (
             <Layout>
                 <Sider
@@ -31,14 +48,14 @@ export default class BaseLayout extends Component {
                     collapsed={this.state.collapsed}
                 >
                     <div className="logo">
-                        logo
+                        步履不停
                     </div>
-                    <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
-                        <Menu.Item key="">
+                    <Menu theme="dark" mode="inline" selectedKeys={[active]} onClick={this.handleClick}>
+                        <Menu.Item key="/">
                             <Icon type="user"/>
                             <span>首页</span>
                         </Menu.Item>
-                        <Menu.Item key="about">
+                        <Menu.Item key="/about">
                             <Icon type="video-camera"/>
                             <span>关于</span>
                         </Menu.Item>
