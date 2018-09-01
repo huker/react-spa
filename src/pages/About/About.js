@@ -9,7 +9,9 @@ export default class About extends Component {
         return (
             <BaseLayout>
                 <div>
-                    <h3>about</h3>
+                    <h3>sieg</h3>
+                    <p>前端开发</p>
+                    <p>https://github.com/huker</p>
                 </div>
             </BaseLayout>
         )

@@ -17,6 +17,7 @@ const history = createHashHistory();
 const reduxRouterMiddleware = routerMiddleware(history);
 
 const finalCreateStore = compose(
+    //persistState:['auth'] 持续化store client那边就可以取token了
     applyMiddleware(
         thunk,
         clientMiddle,

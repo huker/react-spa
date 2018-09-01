@@ -16,11 +16,17 @@ export default function clientMiddleware(client) {
                 ...rest
             } = action;
 
-            console.log(promise)
 
             if (!action.promise) {
                 return next(action);
             }
+
+            //这边做一下token的持续化 在store里配了persist 由于没有写auth的action 就注释一下了
+            // const _token = getState()['auth'].token;
+
+            // if (_token) {
+            //     client.setToken(_token)
+            // }
 
             const [REQUEST, SUCCESS, FAILURE] = types;
 
@@ -48,8 +54,6 @@ export default function clientMiddleware(client) {
                     type: FAILURE
                 });
             };
-
-            console.log("client", promise(client))
 
             return promise(client).then(onFulfilled, onRejected).catch(error => {
                 console.error('MIDDLEWARE ERROR:', error);
