@@ -6,6 +6,9 @@ const webpack = require('webpack');
 const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin');
 const PurifycssWebpack = require('purifycss-webpack');
 const glob = require('glob');
+const os = require('os');
+const HappyPack = require('happypack');
+const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
 
 /**
  * 模式
@@ -28,6 +31,15 @@ const glob = require('glob');
  * 配置解析
  */
 
+
+function createHappyPlugin(id, loaders) {
+    return new HappyPack({
+        id: id,
+        loaders: loaders,
+        threadPool: happyThreadPool
+    });
+}
+
 module.exports = {
     mode: "development",
     entry: path.join(__dirname, 'src/index.js'),
@@ -37,10 +49,10 @@ module.exports = {
     },
     devServer: {
         contentBase: path.resolve('./dist'),
-        host: 'localhost',
+        host: '0.0.0.0',
         port: 3000,
         compress: true,
-        open: true,
+        open: false,
         hot: true
     },
     module: {
@@ -49,36 +61,20 @@ module.exports = {
                 test: /\.css$/,
                 use: ExtractTextWebpackPlugin.extract({
                     fallback: 'style-loader',
-                    use: [
-                        { loader: "css-loader" },
-                        { loader: "postcss-loader" }
-                    ]
+                    use: ['happypack/loader?id=happy-css']
                 })
             },
             {
                 test: /\.less$/,
                 use: ExtractTextWebpackPlugin.extract({
                     fallback: 'style-loader',
-                    use: [
-                        { loader: "css-loader" },
-                        { loader: "postcss-loader" },
-                        {
-                            loader: "less-loader",
-                            options: {
-                                sourceMap: true,
-                                javascriptEnabled: true,
-                                modifyVars: {
-                                    'primary-color': '#00a6f4'
-                                }
-                            }
-                        },
-                    ]
+                    use: ['happypack/loader?id=happy-less']
                 })
             },
             {
                 test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
-                use: ["babel-loader"]
+                use: ['happypack/loader?id=happy-babel-js'],
             },
             {
                 test: /\.(png|jpg|gif|svg|jpeg)$/,
@@ -107,6 +103,46 @@ module.exports = {
         // new PurifycssWebpack({
         //     paths: glob.sync(path.resolve('src/*.html'))
         // })，
+        createHappyPlugin('happy-babel-js', [{
+            loader: 'babel-loader'
+        }]),
+        createHappyPlugin('happy-css', [{
+            loader: 'css-loader',
+            query: {
+                minimize: false, // 压缩css功能在postcss中启用
+                importLoaders: 1
+            }
+        }, {
+            loader: 'postcss-loader',
+            query: {
+                config: {
+                    path: path.join(__dirname, './postcss.config.js')
+                },
+            }
+        }]),
+        createHappyPlugin('happy-less', [{
+            loader: 'css-loader',
+            query: {
+                minimize: false,
+                importLoaders: 2
+            }
+        }, {
+            loader: 'postcss-loader',
+            query: {
+                config: {
+                    path: path.join(__dirname, './postcss.config.js')
+                },
+            }
+        }, {
+            loader: 'less-loader',
+            options: {
+                sourceMap: true,
+                javascriptEnabled: true,
+                modifyVars: {
+                    'primary-color': '#00a6f4'
+                }
+            }
+        }]),
     ],
     resolve: {},
     devtool: 'inline-source-map'
