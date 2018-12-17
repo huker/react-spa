@@ -35,3 +35,7 @@
 以上基础配置时 RUN Time: 32341ms
 加入happyPack(多进程取cpu最大 我电脑是4) Time: 14048ms
 
+#### 工具类
+1.git-revision-webpack-plugin
+获取当前git信息
+

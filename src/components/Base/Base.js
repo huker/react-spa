@@ -4,7 +4,7 @@
 import React, { Component } from "react";
 import { Layout, Menu, Icon } from 'antd';
 import "./Base.less";
-const { Header, Sider, Content } = Layout;
+const { Header, Sider, Content, Footer } = Layout;
 import { connect } from "react-redux";
 import { changeTab } from "../../redux/actions/tabAction";
 import { push } from 'react-router-redux';
@@ -74,6 +74,11 @@ export default class BaseLayout extends Component {
                             {this.props.children}
                         </div>
                     </Content>
+                    <Footer>
+                        <p>Version:{process.VERSION}</p>
+                        <p>Commit:{process.COMMITHASH}</p>
+                        <p>Branch:{process.BRANCH}</p>
+                    </Footer>
                 </Layout>
             </Layout>
         );
