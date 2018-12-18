@@ -3,7 +3,6 @@
  */
 import axios from 'axios';
 import qs from 'qs';
-import lodash from "lodash";
 
 const methods = ['get', 'post', 'put', 'patch', 'delete'];
 

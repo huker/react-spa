@@ -4,6 +4,7 @@ import { Tag, Button } from "antd";
 import { increment, decrement, reset, loadNewsList } from '../../redux/actions/newsAction';
 import BaseLayout from "../../components/Base/Base";
 import { connect } from "react-redux";
+import lodash from "lodash";
 
 @connect(
     (state) => ({
@@ -20,6 +21,8 @@ export default class Home extends Component {
     }
 
     componentWillMount() {
+        const sum = lodash.sum([1, 2, 4]);
+        console.log(sum)
     }
 
     render() {

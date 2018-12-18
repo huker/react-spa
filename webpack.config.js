@@ -11,6 +11,9 @@ const HappyPack = require('happypack');
 const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
 const GitRevisonPlugin = require('git-revision-webpack-plugin');
 const gitRevison = new GitRevisonPlugin();
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
+const isDev = (process.env.ENV === 'dev');
 
 function createHappyPlugin(id, loaders) {
     return new HappyPack({
@@ -137,7 +140,11 @@ module.exports = {
                 }
             }
         }]),
+        new BundleAnalyzerPlugin()
     ],
     resolve: {},
-    devtool: 'inline-source-map'
+    devtool: isDev && 'cheap-module-eval-source-map',
+    externals: {
+        lodash: '_'
+    }
 };
