@@ -4,7 +4,7 @@ install:
 	@npm install -d;
 
 run:
-	@env-cmd config/dev.json webpack-dev-server;
+	@env-cmd config/dev.json webpack-dev-server --progress;
 
 build-ci:
 	@env-cmd config/ci.json webpack --config webpack.config.js --progress --profile --colors;
@@ -14,3 +14,6 @@ build-live:
 
 pre-deploy:build-ci
 	@http-server ./dist;
+
+dll:
+	@webpack --config webpack.dll.config.js

@@ -35,6 +35,13 @@
 以上基础配置时 RUN Time: 32341ms
 加入happyPack(多进程取cpu最大 我电脑是4) Time: 14048ms
 
+2.DllPlugin+DllReferencePlugin
+分离稳定的第三方包，避免重复构建，加快了构建速度
+
+效果:
+之前 make run Time:16735ms
+之后 make run Time:12292ms
+
 #### 工具类
 1.git-revision-webpack-plugin
 获取当前git信息

@@ -12,6 +12,7 @@ const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
 const GitRevisonPlugin = require('git-revision-webpack-plugin');
 const gitRevison = new GitRevisonPlugin();
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const HtmlWebpackIncludeAssetsPlugin = require('html-webpack-include-assets-plugin');
 
 const isDev = (process.env.ENV === 'dev');
 
@@ -87,8 +88,12 @@ module.exports = {
             'process.COMMITHASH': JSON.stringify(gitRevison.commithash()),
             'process.BRANCH': JSON.stringify(gitRevison.branch())
         }),
+        new webpack.DllReferencePlugin({
+            context: __dirname,
+            manifest: require('./build/lib-manifest.json')
+        }),
         new webpack.HotModuleReplacementPlugin(),
-        new CleanWebpackPlugin(['./dist']),
+        // new CleanWebpackPlugin(['./dist']),
         new HtmlWebpackPlugin({
             template: './src/index.html',
             title: 'react spa',
@@ -140,11 +145,17 @@ module.exports = {
                 }
             }
         }]),
-        new BundleAnalyzerPlugin()
+        new BundleAnalyzerPlugin(),
+        new HtmlWebpackIncludeAssetsPlugin({
+            files: '*.html',
+            assets: [{
+                path: './',
+                glob: '*.dll.js'
+            }],
+            append: false
+        })
     ],
     resolve: {},
     devtool: isDev && 'cheap-module-eval-source-map',
-    externals: {
-        lodash: '_'
-    }
+    externals: {}
 };
