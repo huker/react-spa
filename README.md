@@ -46,6 +46,9 @@
 1.git-revision-webpack-plugin
 获取当前git信息
 
-2.webpack-bundle-analyzer
+2.webpack-bundle-analyzer (优化阶段使用)
 分析插件，便于找到需要优化的部分
+
+3.speed-measure-webpack-plugin (优化阶段使用)
+打包完会分析出每个步骤花的时间
 

@@ -1,9 +1,8 @@
 "use strict";
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
 const webpack = require('webpack');
-const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const PurifycssWebpack = require('purifycss-webpack');
 const glob = require('glob');
 const os = require('os');
@@ -11,10 +10,7 @@ const HappyPack = require('happypack');
 const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
 const GitRevisonPlugin = require('git-revision-webpack-plugin');
 const gitRevison = new GitRevisonPlugin();
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const HtmlWebpackIncludeAssetsPlugin = require('html-webpack-include-assets-plugin');
-
-const isDev = (process.env.ENV === 'dev');
 
 function createHappyPlugin(id, loaders) {
     return new HappyPack({
@@ -29,36 +25,23 @@ for ( let key in process.env ) {
     envObj['process.env.' + key] = JSON.stringify(process.env[key])
 }
 
+// module.exports = smp.wrap({
 module.exports = {
     mode: "development",
     entry: path.join(__dirname, 'src/index.js'),
     output: {
         path: path.join(__dirname, './dist'),
-        filename: "bundle.js"
-    },
-    devServer: {
-        contentBase: path.resolve('./dist'),
-        host: '0.0.0.0',
-        port: 3000,
-        compress: true,
-        open: false,
-        hot: true
+        filename: "[name].js"
     },
     module: {
         rules: [
             {
                 test: /\.css$/,
-                use: ExtractTextWebpackPlugin.extract({
-                    fallback: 'style-loader',
-                    use: ['happypack/loader?id=happy-css']
-                })
+                use: ['style-loader', MiniCssExtractPlugin.loader, 'happypack/loader?id=happy-css']
             },
             {
                 test: /\.less$/,
-                use: ExtractTextWebpackPlugin.extract({
-                    fallback: 'style-loader',
-                    use: ['happypack/loader?id=happy-less']
-                })
+                use: ['style-loader', MiniCssExtractPlugin.loader, 'happypack/loader?id=happy-less']
             },
             {
                 test: /\.(js|jsx)$/,
@@ -78,10 +61,10 @@ module.exports = {
         ]
     },
     plugins: [
-        new ExtractTextWebpackPlugin({
-            filename: 'css/index.css'
+        new MiniCssExtractPlugin({
+            filename: 'css/[name].css',
+            chunkFilename: '[name].css'
         }),
-        // new webpack.EnvironmentPlugin(Object.keys(process.env)),
         new webpack.DefinePlugin({
             ...envObj,
             'process.VERSION': JSON.stringify(gitRevison.version()),
@@ -92,8 +75,6 @@ module.exports = {
             context: __dirname,
             manifest: require('./build/lib-manifest.json')
         }),
-        new webpack.HotModuleReplacementPlugin(),
-        // new CleanWebpackPlugin(['./dist']),
         new HtmlWebpackPlugin({
             template: './src/index.html',
             title: 'react spa',
@@ -145,7 +126,6 @@ module.exports = {
                 }
             }
         }]),
-        new BundleAnalyzerPlugin(),
         new HtmlWebpackIncludeAssetsPlugin({
             files: '*.html',
             assets: [{
@@ -156,6 +136,5 @@ module.exports = {
         })
     ],
     resolve: {},
-    devtool: isDev && 'cheap-module-eval-source-map',
     externals: {}
 };
