@@ -3,10 +3,13 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "bin": {
+    "cz": "./bin/cz.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
-    "start": "webpack-dev-server"
+    "start": "env-cmd config/dev.json webpack-dev-server --config webpack.dev.config.js --progress"
   },
   "repository": {
     "type": "git",
