@@ -22,7 +22,6 @@ export default class Home extends Component {
 
     componentWillMount() {
         const sum = lodash.sum([1, 2, 4]);
-        console.log(sum)
     }
 
     render() {

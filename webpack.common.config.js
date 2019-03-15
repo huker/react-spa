@@ -12,6 +12,8 @@ const GitRevisonPlugin = require('git-revision-webpack-plugin');
 const gitRevison = new GitRevisonPlugin();
 const HtmlWebpackIncludeAssetsPlugin = require('html-webpack-include-assets-plugin');
 const { SkeletonPlugin } = require('page-skeleton-webpack-plugin');
+const ObsoleteWebpackPlugin = require('obsolete-webpack-plugin');
+const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 
 function createHappyPlugin(id, loaders) {
     return new HappyPack({
@@ -81,6 +83,12 @@ module.exports = {
             title: 'react spa',
             hash: true
         }),
+        // new ObsoleteWebpackPlugin({
+        //     name: 'obsolete'
+        // }),
+        // new ScriptExtHtmlWebpackPlugin({
+        //     async: 'obsolete'
+        // }),
         // new SkeletonPlugin({
         //     pathname: path.resolve(__dirname, './shell'), // 用来存储 shell 文件的地址
         //     staticDir: path.resolve(__dirname, './dist'), // 最好和 `output.path` 相同
