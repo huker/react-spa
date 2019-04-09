@@ -3,7 +3,7 @@
  */
 import React, { Component } from "react";
 import { Layout, Menu, Icon } from 'antd';
-import "./Base.less";
+import styles from "./Base.less";
 const { Header, Sider, Content, Footer } = Layout;
 import { connect } from "react-redux";
 import { changeTab } from "../../redux/actions/tabAction";
@@ -47,7 +47,7 @@ export default class BaseLayout extends Component {
                     collapsible
                     collapsed={this.state.collapsed}
                 >
-                    <div className="logo">
+                    <div className={styles.logo}>
                         步履不停
                     </div>
                     <Menu theme="dark" mode="inline" selectedKeys={[active]} onClick={this.handleClick}>
@@ -64,7 +64,7 @@ export default class BaseLayout extends Component {
                 <Layout>
                     <Header style={{ background: '#fff', padding: 0 }}>
                         <Icon
-                            className="trigger"
+                            className={styles.trigger}
                             type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
                             onClick={this.toggle}
                         />

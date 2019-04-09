@@ -3,8 +3,6 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const PurifycssWebpack = require('purifycss-webpack');
-const glob = require('glob');
 const os = require('os');
 const HappyPack = require('happypack');
 const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
@@ -12,8 +10,6 @@ const GitRevisonPlugin = require('git-revision-webpack-plugin');
 const gitRevison = new GitRevisonPlugin();
 const HtmlWebpackIncludeAssetsPlugin = require('html-webpack-include-assets-plugin');
 const { SkeletonPlugin } = require('page-skeleton-webpack-plugin');
-const ObsoleteWebpackPlugin = require('obsolete-webpack-plugin');
-const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 
 function createHappyPlugin(id, loaders) {
     return new HappyPack({
@@ -28,7 +24,6 @@ for ( let key in process.env ) {
     envObj['process.env.' + key] = JSON.stringify(process.env[key])
 }
 
-// module.exports = smp.wrap({
 module.exports = {
     mode: "development",
     entry: path.join(__dirname, 'src/index.js'),
@@ -40,11 +35,7 @@ module.exports = {
         rules: [
             {
                 test: /\.css$/,
-                use: ['style-loader', MiniCssExtractPlugin.loader, 'happypack/loader?id=happy-css']
-            },
-            {
-                test: /\.less$/,
-                use: ['style-loader', MiniCssExtractPlugin.loader, 'happypack/loader?id=happy-less']
+                use: [MiniCssExtractPlugin.loader, 'happypack/loader?id=happy-css']
             },
             {
                 test: /\.(js|jsx)$/,
@@ -83,20 +74,11 @@ module.exports = {
             title: 'react spa',
             hash: true
         }),
-        // new ObsoleteWebpackPlugin({
-        //     name: 'obsolete'
-        // }),
-        // new ScriptExtHtmlWebpackPlugin({
-        //     async: 'obsolete'
-        // }),
         // new SkeletonPlugin({
         //     pathname: path.resolve(__dirname, './shell'), // 用来存储 shell 文件的地址
         //     staticDir: path.resolve(__dirname, './dist'), // 最好和 `output.path` 相同
         //     routes: ['/'], // 将需要生成骨架屏的路由添加到数组中
         // }),
-        // new PurifycssWebpack({
-        //     paths: glob.sync(path.resolve('src/*.html'))
-        // })，
         createHappyPlugin('happy-babel-js', [{
             loader: 'babel-loader',
             query: {
@@ -115,29 +97,6 @@ module.exports = {
                 config: {
                     path: path.join(__dirname, './postcss.config.js')
                 },
-            }
-        }]),
-        createHappyPlugin('happy-less', [{
-            loader: 'css-loader',
-            query: {
-                minimize: false,
-                importLoaders: 2
-            }
-        }, {
-            loader: 'postcss-loader',
-            query: {
-                config: {
-                    path: path.join(__dirname, './postcss.config.js')
-                },
-            }
-        }, {
-            loader: 'less-loader',
-            options: {
-                sourceMap: true,
-                javascriptEnabled: true,
-                modifyVars: {
-                    'primary-color': '#00a6f4'
-                }
             }
         }]),
         new HtmlWebpackIncludeAssetsPlugin({

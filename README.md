@@ -1,4 +1,4 @@
-## react项目基础搭建
+## react项目搭建实践
 
 - react16
 - webpack4
@@ -24,25 +24,20 @@
 插件：
 1.HtmlWebpackPlugin 将html打包到dist下可以自动引入打包的js,可以压缩、配置标题、添加hash等（不会缓存）
 2.CleanWebpackPlugin 清除打包的文件
-3.ExtractTextWebpackPlugin 讲css编译成一个文件来引入（style-loader是插入到style标签中），在生产的时候用，因为这样的话就没有hot更新了加上fallback是当ExtractTextWebpackPlugin disable的时候就会用
-4.PurifycssWebpack 没用的css可以不打包进去
+~~3.ExtractTextWebpackPlugin 讲css编译成一个文件来引入（style-loader是插入到style标签中），在生产的时候用，因为这样的话就没有hot更新了加上fallback是当ExtractTextWebpackPlugin disable的时候就会用~~
+3.使用MiniCssExtractPlugin了 抽离css
 
 #### 优化
 1.happyPack
 发挥多核CPU的能力 多进程打包 js、css文件
 
-效果：
-以上基础配置时 RUN Time: 32341ms
-加入happyPack(多进程取cpu最大 我电脑是4) Time: 14048ms
-
 2.DllPlugin+DllReferencePlugin
 分离稳定的第三方包，避免重复构建，加快了构建速度
 
-效果:
-之前 make run Time:16735ms
-之后 make run Time:12292ms
+3.css模块化
+写了篇记录 https://www.jianshu.com/p/8fdb241b3fa6
 
-#### 工具类
+#### 工具
 1.git-revision-webpack-plugin
 获取当前git信息
 
@@ -51,4 +46,14 @@
 
 3.speed-measure-webpack-plugin (优化阶段使用)
 打包完会分析出每个步骤花的时间
+
+
+#### 一些尝试
+> 没有加入进去 需要进一步调研下
+
+- page-skeleton-webpack-plugin 骨架屏
+  还在尝试中 之前试了下启动会有问题，需要手动下chrome内核，而且不支持hash路由？
+- PurifycssWebpack
+  没用的css可以不打包进去
+
 
