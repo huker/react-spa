@@ -5,6 +5,7 @@
   ],
   "plugins": [
     "react-hot-loader/babel",
+    "lodash",
     [
       "@babel/plugin-proposal-decorators",
       {

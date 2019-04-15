@@ -10,6 +10,7 @@ const GitRevisonPlugin = require('git-revision-webpack-plugin');
 const gitRevison = new GitRevisonPlugin();
 const HtmlWebpackIncludeAssetsPlugin = require('html-webpack-include-assets-plugin');
 const { SkeletonPlugin } = require('page-skeleton-webpack-plugin');
+const LodashPlugin = require('lodash-webpack-plugin');
 
 function createHappyPlugin(id, loaders) {
     return new HappyPack({
@@ -106,7 +107,8 @@ module.exports = {
                 glob: '*.dll.js'
             }],
             append: false
-        })
+        }),
+        new LodashPlugin()
     ],
     resolve: {},
     externals: {}

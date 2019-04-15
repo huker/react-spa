@@ -20,7 +20,6 @@ const lib = [
     'react-router-redux',
     'redux-localstorage',
     'redux-thunk',
-    'lodash',
     'history',
     'axios',
     'qs'

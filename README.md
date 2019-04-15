@@ -37,6 +37,10 @@
 3.css模块化
 写了篇记录 https://www.jianshu.com/p/8fdb241b3fa6
 
+4.lodash按需引入
+lodash-webpack-plugin + babel-plugin-lodash
+main.js从 255k -> 187k
+
 #### 工具
 1.git-revision-webpack-plugin
 获取当前git信息

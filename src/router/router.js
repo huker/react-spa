@@ -1,3 +1,4 @@
+import { hot } from 'react-hot-loader/root'
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router';
 import { createHashHistory } from 'history';
@@ -6,7 +7,7 @@ import { ConnectedRouter, push } from 'react-router-redux';
 import Home  from "../pages/Home/Home";
 import About  from "../pages/About/About";
 
-export default class App extends Component {
+class App extends Component {
 
     constructor(props) {
         super(props);
@@ -33,3 +34,5 @@ export default class App extends Component {
         )
     }
 }
+
+export default hot(App)
