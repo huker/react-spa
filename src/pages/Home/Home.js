@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import img1 from "../../assets/img/img1.jpeg";
 import { Tag, Button } from "antd";
-import { increment, decrement, reset, loadNewsList } from '../../redux/actions/newsAction';
-import BaseLayout from "../../components/Base/Base";
 import { connect } from "react-redux";
 import lodash from "lodash";
+import img1 from "assets/img/img1.jpeg";
+import BaseLayout from "components/Base/Base";
+import { increment, decrement, reset, loadNewsList } from 'reduxAlias/actions/newsAction';
 
 @connect(
     (state) => ({

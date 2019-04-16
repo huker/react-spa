@@ -1,34 +1,81 @@
 ## react项目搭建实践
 
-- react16
-- webpack4
-- redux
-- redux-thunk
-- axios
-- ant design
-- less
+![react](https://img.shields.io/badge/react-16-brightgreen.svg?style=plastic)![webpack](https://img.shields.io/badge/webpack-4-blue.svg?style=plastic)![redux](https://img.shields.io/badge/redux-red.svg?style=plastic)![antd](https://img.shields.io/badge/antd-yellow.svg?style=plastic)
 
 
 ### webpack配置
 
 #### 基础配置
-开发服务器 webpack-dev-server
+#### 1.entry
 
-模块：
-1.style-loader 编译好的css模块插到style中
-2.css-loader 打包css模块
-3.less less-loader 要使用less就带上less-loader 同理sass和stylus等 rules是个数组，配置所有的规则。use是从右往左写，先css-loader打好，在style-loader塞进去
-4.babel 安装 babel-core babel-loader babel-preset-env babel-preset-react
-5.postcss-loader要在css-loader之前做 配置了postcss.config.js 自动加前缀（预处理器）
+单页面单入口
 
-插件：
+```javascript
+entry: path.join(__dirname, 'src/index.js')
+```
+
+#### 2.output
+
+```javascript
+output: {
+        path: path.join(__dirname, './dist'),
+        filename: "[name].js"
+}
+```
+
+#### 3.module
+
+css/less:
+
+css和less分成两个test，less要用less-loader来解析。
+
+style-loader 编译好的css模块插到style中，css-loader 打包css模块，use是从右往左写的，比是处理css的话，就先postcss-loader然后css-loader，use里就要先写css-loader然后写postcss-loader
+
+js:
+
+解析高级语法，使用babel-loader。在项目根目录下创建.babelrc文件，写babel的配置。
+
+presets是预设，`babel-preset-env` 可以根据配置的目标浏览器或者运行环境来自动将ES2015+的代码转换为es5。现在已经不使用以前的stage之类的了。
+
+plugins是使用的插件，需要用什么就装什么，要用到装饰器，就安装@babel/plugin-proposal-decorators，使用更高级语法就安装@babel/plugin-transform-runtime等等
+
+```json
+{
+  "presets": [
+    "@babel/preset-env",
+    "@babel/preset-react"
+  ],
+  "plugins": [
+    "react-hot-loader/babel",
+    "lodash",
+    [
+      "@babel/plugin-proposal-decorators",
+      {
+        "legacy": true
+      }
+    ],
+    "@babel/plugin-proposal-class-properties",
+    "@babel/plugin-transform-runtime",
+    [
+      "import",
+      {
+        "style": true,
+        "libraryName": "antd"
+      }
+    ]
+  ]
+}
+```
+
+#### 4.plugins
+
 1.HtmlWebpackPlugin 将html打包到dist下可以自动引入打包的js,可以压缩、配置标题、添加hash等（不会缓存）
 2.CleanWebpackPlugin 清除打包的文件
 ~~3.ExtractTextWebpackPlugin 讲css编译成一个文件来引入（style-loader是插入到style标签中），在生产的时候用，因为这样的话就没有hot更新了加上fallback是当ExtractTextWebpackPlugin disable的时候就会用~~
 3.使用MiniCssExtractPlugin了 抽离css
 
 #### 优化
-1.happyPack
+1.HappyPack
 发挥多核CPU的能力 多进程打包 js、css文件
 
 2.DllPlugin+DllReferencePlugin

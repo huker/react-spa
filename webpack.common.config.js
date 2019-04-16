@@ -110,6 +110,17 @@ module.exports = {
         }),
         new LodashPlugin()
     ],
-    resolve: {},
+    resolve: {
+        modules: [
+            path.resolve(__dirname, 'src'),
+            path.resolve(__dirname, 'node_modules'),
+        ],
+        alias: {
+            components: path.resolve(__dirname, './src/components'),
+            assets: path.resolve(__dirname, './src/assets'),
+            pages: path.resolve(__dirname, './src/pages'),
+            reduxAlias: path.resolve(__dirname, './src/redux')
+        }
+    },
     externals: {}
 };

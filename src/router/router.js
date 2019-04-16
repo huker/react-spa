@@ -4,8 +4,8 @@ import { Route, Switch } from 'react-router';
 import { createHashHistory } from 'history';
 import { connect, Provider } from 'react-redux';
 import { ConnectedRouter, push } from 'react-router-redux';
-import Home  from "../pages/Home/Home";
-import About  from "../pages/About/About";
+import Home  from "pages/Home/Home";
+import About  from "pages/About/About";
 
 class App extends Component {
 

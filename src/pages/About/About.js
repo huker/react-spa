@@ -2,8 +2,8 @@
  * Created by huk on 2018/7/25.
  */
 import React, { Component } from "react";
-import BaseLayout from "../../components/Base/Base";
-import {Button} from "antd";
+import { Button } from "antd";
+import BaseLayout from "components/Base/Base";
 
 export default class About extends Component {
     render() {
