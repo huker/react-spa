@@ -9,7 +9,6 @@ const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
 const GitRevisonPlugin = require('git-revision-webpack-plugin');
 const gitRevison = new GitRevisonPlugin();
 const HtmlWebpackIncludeAssetsPlugin = require('html-webpack-include-assets-plugin');
-const { SkeletonPlugin } = require('page-skeleton-webpack-plugin');
 const LodashPlugin = require('lodash-webpack-plugin');
 
 function createHappyPlugin(id, loaders) {
@@ -75,11 +74,6 @@ module.exports = {
             title: 'react spa',
             hash: true
         }),
-        // new SkeletonPlugin({
-        //     pathname: path.resolve(__dirname, './shell'), // 用来存储 shell 文件的地址
-        //     staticDir: path.resolve(__dirname, './dist'), // 最好和 `output.path` 相同
-        //     routes: ['/'], // 将需要生成骨架屏的路由添加到数组中
-        // }),
         createHappyPlugin('happy-babel-js', [{
             loader: 'babel-loader',
             query: {

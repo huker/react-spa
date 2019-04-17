@@ -88,6 +88,9 @@ plugins是使用的插件，需要用什么就装什么，要用到装饰器，�
 lodash-webpack-plugin + babel-plugin-lodash
 main.js从 255k -> 187k
 
+5.JS压缩使用TerserPlugin
+官方在v4.26.0以后生产默认使用了TerserPlugin做js压缩，所以webpack版本高的就不用自己手动加了
+
 #### 工具
 1.git-revision-webpack-plugin
 获取当前git信息

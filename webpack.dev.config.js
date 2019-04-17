@@ -4,9 +4,6 @@ const path = require('path');
 const webpack = require('webpack');
 const baseConfig = require('./webpack.common.config');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-//监测打包进度
-const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
-const smp = new SpeedMeasurePlugin();
 
 module.exports = merge(baseConfig, {
     mode: "development",
