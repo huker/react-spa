@@ -91,6 +91,18 @@ main.js从 255k -> 187k
 5.JS压缩使用TerserPlugin
 官方在v4.26.0以后生产默认使用了TerserPlugin做js压缩，所以webpack版本高的就不用自己手动加了
 
+6.热更新
+webpack-dev-server在3.2.0以后配置hot时自动加入hmr 不用手动加入HotModuleReplacementPlugin
+所以只要
+```javascript
+devServer:{
+    ...,
+    hot:true //只要配置这个就ok了
+}
+```
+保持state状态和局部更新使用react-hot-loader实现
+v4的使用是在babel中添加"react-hot-loader/babel"，然后在要更新的部分外面用hot包起来
+
 #### 工具
 1.git-revision-webpack-plugin
 获取当前git信息
