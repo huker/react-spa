@@ -10,6 +10,7 @@ const GitRevisonPlugin = require('git-revision-webpack-plugin');
 const gitRevison = new GitRevisonPlugin();
 const HtmlWebpackIncludeAssetsPlugin = require('html-webpack-include-assets-plugin');
 const LodashPlugin = require('lodash-webpack-plugin');
+const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 
 function createHappyPlugin(id, loaders) {
     return new HappyPack({
@@ -29,7 +30,7 @@ module.exports = {
     entry: path.join(__dirname, 'src/index.js'),
     output: {
         path: path.join(__dirname, './dist'),
-        filename: "[name].js"
+        filename: "[name]-[hash].js"
     },
     module: {
         rules: [
@@ -56,8 +57,8 @@ module.exports = {
     },
     plugins: [
         new MiniCssExtractPlugin({
-            filename: 'css/[name].css',
-            chunkFilename: '[name].css'
+            filename: 'css/[name][hash].css',
+            chunkFilename: '[name][hash].css'
         }),
         new webpack.DefinePlugin({
             ...envObj,
@@ -69,6 +70,7 @@ module.exports = {
             context: __dirname,
             manifest: require('./build/lib-manifest.json')
         }),
+        new FriendlyErrorsWebpackPlugin(),
         new HtmlWebpackPlugin({
             template: './src/index.html',
             title: 'react spa',
